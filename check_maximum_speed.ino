@@ -112,7 +112,7 @@ void loop()
 {
   getPattern();
   if (pattern != "11111111") setMotors(100,100);
-  else setMotors(0,0);
+  else {setMotors(0,0); delay (1000);}
 }
 
 
