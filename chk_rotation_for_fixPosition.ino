@@ -1,4 +1,4 @@
-#define THRESHOLD 500
+#define THRESHOLD 700
 
 int times = 0;
 int Speed = 0;
@@ -21,12 +21,14 @@ void setup()
   for (int i = 0; i <8; i++){
     pinMode(sensor[i], INPUT);
   }
+  getPattern();
 }
 
 
 
 void setMotors(int leftSpeed, int rightSpeed)
 {
+  getPattern();
   if (leftSpeed >= 0 && rightSpeed >= 0)
   {
    analogWrite(leftMotor[0], leftSpeed);   /*   Forward  */
@@ -127,13 +129,13 @@ void loop()
   if (times != 0 ){
     while (times > 0){
       if (dir == 0){
-        setMotors(0, -Speed);
+        setMotors(Speed, -Speed);
         delay(Delay);
         setMotors(0, 0); 
       }
       
       else {
-       setMotors( -Speed, 0);
+       setMotors( -Speed, Speed);
        delay(Delay);
        setMotors(0,0);
       }
