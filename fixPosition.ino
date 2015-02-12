@@ -121,16 +121,18 @@ void fixPosition()
   while (matchPattern(pattern,preferredPos_1) == 0 || matchPattern(pattern,preferredPos_2) == 0 || matchPattern(pattern,preferredPos_3) == 0)
   {  
     if (matchPattern(pattern, pos_00011110) == 1 || matchPattern(pattern, pos_00001111) == 1 || matchPattern(pattern, pos_00011111) == 1 || matchPattern(pattern, pos_00000111) == 1){
-       setMotors(255, -255);
+       setMotors(150, -150);
        delay(50);
        setMotors(0,0);
     } 
     else if (matchPattern(pattern, pos_01111000) == 1 || matchPattern(pattern, pos_11110000) == 1 || matchPattern(pattern, pos_11111000) == 1 || matchPattern(pattern, pos_11100000) == 1)
      {
-       setMotors(-255, 255);
+       setMotors(-150, 150);
        delay(50);
        setMotors(0,0);  
-       }    
+       }
+   
+    else break;    
    }  
 }
   
