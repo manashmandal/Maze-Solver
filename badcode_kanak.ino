@@ -11,6 +11,7 @@ int extra = 52;
 
 
 String pattern = "00000000";
+String conPattern;
 void setMotors(int leftSpeed, int rightSpeed)
 {
   if (leftSpeed >= 0 && rightSpeed >= 0)
@@ -69,7 +70,7 @@ void setMotors(int leftSpeed, int rightSpeed)
   }
 
 }
-void getPattern()
+String getPattern()
 {
   //int i;
   for (int i = 0; i < 8 ; i++)
@@ -87,6 +88,7 @@ void getPattern()
   }
 	 pattern[8] = '\0';
    Serial.println(pattern);
+   return pattern;
 
 }
 
@@ -115,40 +117,57 @@ void setup()
 void loop()
 {
   getPattern();
-  if ((pattern[0] == '1'||/* pattern[1] == '1' ||*/ (pattern[0] == '1' && pattern[1] == '1'))&&pattern[7] != '1')
+  if ((pattern[1] == '1'&&(pattern[0] != '1'||/* pattern[1] == '1' ||*/ (pattern[1] == '1' && pattern[2] == '1'))&&(pattern[7] != '1'&&pattern[6] != '1')))
       {
-      setMotors(0,0);
-      delay(20);
-      setMotors(-100,0);
-      delay(50);
+      //setMotors(0,0);
+     // delay(20);
+      setMotors(0,80);
+      delay(25);
       //setMotors(80,80);
       
     }
-else if ((pattern[7] == '1'||/* pattern[6] == '1' ||*/ (pattern[7] == '1' && pattern[6] == '1'))&&pattern[0] != '1')
+else if ((pattern[6] == '1'||/* pattern[6] == '1' ||*/ (pattern[6] == '1' && pattern[5] == '1'))&&(pattern[0] != '1'&&pattern[1] != '1'))
      {
-      setMotors(0,0);
-      delay(20);
-      setMotors(0,-100);
-      delay(50);
+     // setMotors(0,0);
+     // delay(20);
+      setMotors(80,0);
+      delay(25);
       //setMotors(80,80);
       
     }
-else if (pattern[0] != '1'&& pattern[7] != '1' && (pattern[1] == '1' || pattern[2] == '1'|| pattern[3] == '1'|| pattern[4] == '1'|| pattern[5] == '1'|| pattern[6] == '1'))
-  setMotors(100, 100);
+else if (pattern[0] != '1'&& pattern[7] != '1'&&pattern[1] != '1'&&pattern[6] != '1'&& ( pattern[2] == '1'|| pattern[3] == '1'|| pattern[4] == '1'|| pattern[5] == '1'))
+  setMotors(125, 125);
   
-else if (pattern[0] == '1'&& pattern[7] != '1' && pattern[1] == '1' && pattern[2] == '1'&& pattern[3] == '1' && ( pattern[4] == '1' || pattern[5] == '1'))
+//else if (pattern[0] == '1'&& pattern[7] != '1' && pattern[1] == '1' && pattern[2] == '1' && ( pattern[4] == '1' || pattern[5] == '1'))
+  else if(pattern == "11111110" || pattern == "11111100" ||pattern == "11111000")
   {
   setMotors(0,0);
   delay(50);
-  setMotors(-100, 100);
-  delay(300);
+  setMotors(0, 100);
+  delay(600);
   }
-else if (pattern[7] == '1'&& pattern[0] != '1' && pattern[3] == '1'&& pattern[4] == '1' && pattern[5] == '1'&&(pattern[1] == '1' || pattern[2] == '1'))
+//else if (pattern[7] == '1'&& pattern[0] != '1'&& pattern[6] == '1' && pattern[5] == '1'&&(pattern[4] == '1' || pattern[3] == '1'))
+  
+  else if(pattern == "01111111" || pattern == "00111111" ||pattern == "00011111")
+ // else if(pattern[0] == '0'&&(pattern == "01111111" || pattern == "00111111" ||pattern == "00011111"))
   {
-  setMotors(0,0);
+    //Serial.println("WTF");
+ /* setMotors(0,0);
   delay(50);
-  setMotors(100, -100);
+  setMotors(100,0);
+  delay(500);*/
+  
+  setMotors(80,100);
   delay(300);
+  conPattern = getPattern();
+  //conPattern = pattern;
+  if (conPattern == "00000000")
+    {
+    setMotors(100,0);
+    delay(600);
+    }
+  else 
+    setMotors(100,100);  
   }
 else if(pattern == "00000000")
 	setMotors(0,0);
@@ -157,9 +176,19 @@ else if(pattern == "11111111")
   setMotors(0,0);
   delay(100);
   setMotors(0, 100);
-  delay(500);
-  }
+  delay(600);
+  }/*
+else if(pattern == "10000000")
+    {
+    setMotors(-100,0);
+    delay(50);
+    }*/
+else if(pattern == "00000001")
+    {
+    setMotors(0,-100);
+    delay(50);
+    }
 else
-	setMotors(100,-100);
+	setMotors(0,0);
 
 }
