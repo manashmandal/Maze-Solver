@@ -87,8 +87,6 @@ void setMotors(int leftSpeed, int rightSpeed)
 }
 
 
-
-
 void getPattern()
 {
   for (int i = 0; i < 8; i++){
@@ -124,7 +122,6 @@ void loop()
    dir = Serial.parseInt();
   }
   
-
   
   if (times != 0 ){
     while (times > 0){
@@ -146,8 +143,6 @@ void loop()
     
     times = 0;
  }
-  
-  
   
    /* // For debugging purpose
     Serial.print("Times: " + String(times) + "\n"
