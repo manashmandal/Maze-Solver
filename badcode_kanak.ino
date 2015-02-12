@@ -118,7 +118,7 @@ void loop()
   if ((pattern[0] == '1'||/* pattern[1] == '1' ||*/ (pattern[0] == '1' && pattern[1] == '1'))&&pattern[7] != '1')
       {
       setMotors(0,0);
-      delay(50);
+      delay(20);
       setMotors(-100,0);
       delay(50);
       //setMotors(80,80);
@@ -127,7 +127,7 @@ void loop()
 else if ((pattern[7] == '1'||/* pattern[6] == '1' ||*/ (pattern[7] == '1' && pattern[6] == '1'))&&pattern[0] != '1')
      {
       setMotors(0,0);
-      delay(50);
+      delay(20);
       setMotors(0,-100);
       delay(50);
       //setMotors(80,80);
@@ -136,29 +136,29 @@ else if ((pattern[7] == '1'||/* pattern[6] == '1' ||*/ (pattern[7] == '1' && pat
 else if (pattern[0] != '1'&& pattern[7] != '1' && (pattern[1] == '1' || pattern[2] == '1'|| pattern[3] == '1'|| pattern[4] == '1'|| pattern[5] == '1'|| pattern[6] == '1'))
   setMotors(100, 100);
   
-/*else if (pattern[0] == '1'&& pattern[7] != '1' &&  (pattern[1] == '1' || pattern[2] == '1'||pattern[3] == '1' || pattern[4] == '1' || pattern[5] == '1'))
+else if (pattern[0] == '1'&& pattern[7] != '1' && pattern[1] == '1' && pattern[2] == '1'&& pattern[3] == '1' && ( pattern[4] == '1' || pattern[5] == '1'))
   {
   setMotors(0,0);
   delay(50);
   setMotors(-100, 100);
   delay(300);
   }
-else if (pattern[7] == '1'&& pattern[0] != '1' && (pattern[1] == '1' || pattern[2] == '1'||pattern[3] == '1'||pattern[4] == '1' || pattern[5] == '1'))
+else if (pattern[7] == '1'&& pattern[0] != '1' && pattern[3] == '1'&& pattern[4] == '1' && pattern[5] == '1'&&(pattern[1] == '1' || pattern[2] == '1'))
   {
   setMotors(0,0);
   delay(50);
   setMotors(100, -100);
   delay(300);
-  }*/
+  }
 else if(pattern == "00000000")
 	setMotors(0,0);
-/*else if(pattern == "11111111")
+else if(pattern == "11111111")
   {
   setMotors(0,0);
-  delay(50);
-  setMotors(-100, 100);
-  delay(300);
-  }*/
+  delay(100);
+  setMotors(0, 100);
+  delay(500);
+  }
 else
 	setMotors(100,-100);
 
