@@ -1,3 +1,6 @@
+#define THRESHOLD 700
+
+
 String preferredPos_1 = "00111000"; // Keep this up
 String preferredPos_2 = "00011100"; // Or Keep this up
 String preferredPos_3 = "00111100"; // Or this up
@@ -17,6 +20,7 @@ String pos_11110000 = "11110000"; // More Leaning right, fix left
 String pos_11111000 = "11111000"; // More slight leaning right, fix left
 String pos_11100000 = "11100000"; // Most leaning right, fix left
 
+String pattern = "00000000";
 
 // Sensor and motor initialization
 int sensor[] = {62, 61, 60, 59, 58, 57, 56, 55};
@@ -24,7 +28,7 @@ int leftMotor[] = {3, 4};
 int rightMotor[] = {5, 6};
 
 // storing patterns 
-char pattern[9];
+
 
 /* Driving motors */
 
@@ -114,26 +118,20 @@ int matchPattern(String one, String two)
 void fixPosition()
 {
   getPattern();
-  while (pattern != preferredPos_1 || pattern != prefferedPos_2 || pattern != prefferedPos_3)
+  while (matchPattern(pattern,preferredPos_1) == 0 || matchPattern(pattern,preferredPos_2) == 0 || matchPattern(pattern,preferredPos_3) == 0)
   {  
-   switch(pattern){
-     case pos_00011110:
-     case pos_00001111:
-     case pos_00011111:
-     case pos_00000111:
+    if (matchPattern(pattern, pos_00011110) == 1 || matchPattern(pattern, pos_00001111) == 1 || matchPattern(pattern, pos_00011111) == 1 || matchPattern(pattern, pos_00000111) == 1){
        setMotors(255, -255);
        delay(50);
        setMotors(0,0);
-     
-     case pos_01111000:
-     case pos_11110000:
-     case pos_11111000:
-     case pos_11100000:
+    } 
+    else if (matchPattern(pattern, pos_01111000) == 1 || matchPattern(pattern, pos_11110000) == 1 || matchPattern(pattern, pos_11111000) == 1 || matchPattern(pattern, pos_11100000) == 1)
+     {
        setMotors(-255, 255);
        delay(50);
        setMotors(0,0);  
-
-    }  
+       }    
+   }  
 }
   
 void setup()
