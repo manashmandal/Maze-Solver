@@ -1,11 +1,21 @@
 #define THRESHOLD 700
 
+int times;
 int x = 10;
 int y1 = 70;
 int y2 = 0;
 // Init all bot components
 
 int sensor[] = {62, 61, 60, 59, 58, 57, 56, 55};
+
+// Added left sensor
+int extraLeft = 63;
+
+
+
+int extraRight = 64;
+
+
 int leftMotor[] = {3, 4};
 int rightMotor[] = {5, 6};
 
@@ -152,19 +162,28 @@ void fixit()
 
 
 void setup() {
+  
   Serial.begin(9600);
   // put your setup code here, to run once:
   Serial.println("Fucked");
  //Serial.println (strcmp(patterns, leftPatterns[0]));
   setMotors(0,0);
-  delay(3000);
+  delay(5000);
 }
 
 void loop() {
+  // Delay back time for 5cm in 150 ms
+  // Added anti clock wise turns [guessed turn time: estd: 450ms @ this speed]
   // put your main code here, to run repeatedly:
-
+  // Added U turn guessed time estd: 600ms for StopPattern
+  
+  times = 1;
+  while (times > 0){
   getPatterns();
-  if (strcmp(pattern, requiredPos[0]) == 0 || strcmp(pattern, requiredPos[1]) == 0 || strcmp(pattern, requiredPos[2]) == 0 ||  strcmp(pattern, requiredPos[3]) == 0 || strcmp(pattern, pos_11111111) == 0) {setMotors(130, 130); delay(25);}
-  else if (strcmp(pattern, stopPattern) == 0) {setMotors(0,0);}
+  if (strcmp(pattern, requiredPos[0]) == 0 || strcmp(pattern, requiredPos[1]) == 0 || strcmp(pattern, requiredPos[2]) == 0 ||  strcmp(pattern, requiredPos[3]) == 0 ) {setMotors(100, 100); delay(25);}
+  else if (strcmp(pattern, pos_11111111) == 0 ) {setMotors(0,0); delay(1000); setMotors(-100, -100); delay(130); setMotors(0,0); delay(1000); setMotors(0, 100); delay(450); setMotors(0,0); delay(2000);}
+  else if (strcmp(pattern, stopPattern) == 0) {setMotors(0,0); delay(500); setMotors(-100, -100); delay(160); setMotors(-100,100);  delay(580); setMotors(0,0); delay(1000);}
   else  fixit();
+  }
+  
 }
