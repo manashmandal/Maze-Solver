@@ -1,5 +1,8 @@
 #define THRESHOLD 700
 
+int x = 10;
+int y1 = 60;
+int y2 = 0;
 // Init all bot components
 
 int sensor[] = {62, 61, 60, 59, 58, 57, 56, 55};
@@ -97,7 +100,7 @@ const char* requiredPos[] = {preferredPos_1, preferredPos_2, preferredPos_3, pre
 
 
 
-const char stopPattern[] = "0000000";
+const char stopPattern[] = "00000000";
 
 const char pos_00011110[] = "00011110"; // Leaning left, fix right
 const char pos_00001111[] = "00001111"; // More Leaning left, fix right
@@ -132,18 +135,17 @@ const char* rightPatterns[] = {pos_01111000, pos_11111000, pos_11110000, pos_111
 
 void fixit()
 {
-  getPatterns();
-  if (strcmp(pattern, leftPatterns[0]) == 0) {setMotors(80, -80); delay(10);}
-  if (strcmp(pattern, leftPatterns[1]) == 0) {setMotors(80, -80); delay(10);}
-  if (strcmp(pattern, leftPatterns[2]) == 0) {setMotors(80, -80); delay(10);}
-  if (strcmp(pattern, leftPatterns[3]) == 0) {setMotors(80, -80); delay(10);}
-  if (strcmp(pattern, leftPatterns[4]) == 0) {setMotors(80, -80); delay(10);}
-  if (strcmp(pattern, rightPatterns[0]) == 0) {setMotors(-80, 80); delay(10);}
-  if (strcmp(pattern, rightPatterns[1]) == 0) {setMotors(-80, 80); delay(10);}
-  if (strcmp(pattern, rightPatterns[2]) == 0) {setMotors(-80, 80); delay(10);}
-  if (strcmp(pattern, rightPatterns[3]) == 0) {setMotors(-80, 80); delay(10);}
-  if (strcmp(pattern, rightPatterns[4]) == 0) {setMotors(-80, 80); delay(10);}
-  else setMotors(100, 100);
+  //getPatterns();
+  if (strcmp(pattern, leftPatterns[0]) == 0) {setMotors(y1, -y2); delay(x);}
+  if (strcmp(pattern, leftPatterns[1]) == 0) {setMotors(y1, -y2); delay(x);}
+  if (strcmp(pattern, leftPatterns[2]) == 0) {setMotors(y1, -y2); delay(x);}
+  if (strcmp(pattern, leftPatterns[3]) == 0) {setMotors(y1, -y2); delay(x);}
+  if (strcmp(pattern, leftPatterns[4]) == 0) {setMotors(y1, -y2); delay(x);}
+  if (strcmp(pattern, rightPatterns[0]) == 0) {setMotors(-y2, y1); delay(x);}
+  if (strcmp(pattern, rightPatterns[1]) == 0) {setMotors(-y2, y1); delay(x);}
+  if (strcmp(pattern, rightPatterns[2]) == 0) {setMotors(-y2, y1); delay(x);}
+  if (strcmp(pattern, rightPatterns[3]) == 0) {setMotors(-y2, y1); delay(x);}
+  if (strcmp(pattern, rightPatterns[4]) == 0) {setMotors(-y2, y1); delay(x);}
   
 }
 
@@ -154,13 +156,15 @@ void setup() {
   // put your setup code here, to run once:
   Serial.println("Fucked");
  //Serial.println (strcmp(patterns, leftPatterns[0]));
+  setMotors(0,0);
+  delay(3000);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
 
   getPatterns();
-  if (strcmp(pattern, requiredPos[0]) == 0 || strcmp(pattern, requiredPos[1]) == 0 || strcmp(pattern, requiredPos[2]) == 0 ||  strcmp(pattern, requiredPos[3]) == 0) {setMotors(100, 100); delay(100);}
-  else if (strcmp(pattern, stopPattern) == 0) setMotors(0,0);
+  if (strcmp(pattern, requiredPos[0]) == 0 || strcmp(pattern, requiredPos[1]) == 0 || strcmp(pattern, requiredPos[2]) == 0 ||  strcmp(pattern, requiredPos[3]) == 0 || strcmp(pattern, pos_11111111) == 0) {setMotors(110, 110); delay(25);}
+  else if (strcmp(pattern, stopPattern) == 0) {setMotors(0,0);}
   else  fixit();
 }
