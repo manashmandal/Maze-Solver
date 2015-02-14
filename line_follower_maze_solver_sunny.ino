@@ -1,4 +1,4 @@
-#define THRESHOLD 750
+#define THRESHOLD 700
 
 int times;
 int x = 10;
@@ -18,6 +18,10 @@ char rightReading[] = "0";
 // Unusual patterns encountered
 char unusual_11000000[] = "11000000";
 char unusual_00000011[] = "00000011";
+char unusual_01110000[] = "01110000";
+char unusual_10000000[] = "10000000";
+char unusual_00000001[] = "00000001";
+
 
 
 
@@ -139,15 +143,19 @@ const char pos_00011111[] = "00011111"; // More slight leaning left, fix right
 const char pos_00000111[] = "00000111"; // Most leaning left, fix right
 const char pos_00001100[] = "00001100"; // fix right
 const char pos_00000011[] = "00000011"; // reference from unusual
+const char pos_00001110[] = "00001110"; // reference from unusual
+const char pos_00000001[] = "00000001"; // reference from unusual
+
 
 const char pos_00111111[] = "00111111"; // Added new pattern
+
 
 
 const char pos_11111111[] = "11111111";
 
 
 // All left Patterns in one string
-const char* leftPatterns[] = {pos_00011110, pos_00001111, pos_00011111, pos_00000111, pos_00001100, pos_00000011};
+const char* leftPatterns[] = {pos_00011110, pos_00001111, pos_00011111, pos_00000111, pos_00001100, pos_00000011, pos_00001110, pos_00000001};
 
 
 ///char pos_01111000[] = "01111000"; // Leaning right, fix left
@@ -157,6 +165,8 @@ const char pos_11111000[] = "11111000"; // More slight leaning right, fix left
 const char pos_11110000[] = "11110000";
 const char pos_11100000[] = "11100000"; // Most leaning right, fix left
 const char pos_00110000[] = "00110000"; // fix right
+const char pos_01110000[] = "01110000"; // Reference from unusual_01110000
+const char pos_10000000[] = "10000000"; // Reference from unusual_10000000
 
 const char pos_11000000[] = "11000000"; // Reference from unusual_11000000
 
@@ -171,7 +181,7 @@ const char pos_11111100[] = "11111100";
 
 
 
-const char* rightPatterns[] = {pos_01111000, pos_11111000, pos_11110000, pos_11100000, pos_00110000, pos_11000000};
+const char* rightPatterns[] = {pos_01111000, pos_11111000, pos_11110000, pos_11100000, pos_00110000, pos_11000000, pos_01110000, pos_10000000};
 //const char* requiredPos[] = {preferredPos_1, preferredPos_2, preferredPos_3, preferredPos_4};
 //const char* leftPatterns[] = {pos_00011110, pos_00001111, pos_00011111, pos_00000111, pos_00001100};
 
@@ -185,6 +195,8 @@ void fixit()
   if (strcmp(pattern, leftPatterns[3]) == 0) {setMotors(y1, -y2); delay(x);}
   if (strcmp(pattern, leftPatterns[4]) == 0) {setMotors(y1, -y2); delay(x);}
   if (strcmp(pattern, leftPatterns[5]) == 0) {setMotors(y1, -y2); delay(x);}
+  if (strcmp(pattern, leftPatterns[6]) == 0) {setMotors(y1, -y2); delay(x);}
+  if (strcmp(pattern, leftPatterns[7]) == 0) {setMotors(y1, -y2); delay(x);}
   
   if (strcmp(pattern, rightPatterns[0]) == 0) {setMotors(-y2, y1); delay(x);}
   if (strcmp(pattern, rightPatterns[1]) == 0) {setMotors(-y2, y1); delay(x);}
@@ -192,6 +204,8 @@ void fixit()
   if (strcmp(pattern, rightPatterns[3]) == 0) {setMotors(-y2, y1); delay(x);}
   if (strcmp(pattern, rightPatterns[4]) == 0) {setMotors(-y2, y1); delay(x);}
   if (strcmp(pattern, rightPatterns[5]) == 0) {setMotors(-y2, y1); delay(x);}
+  if (strcmp(pattern, rightPatterns[6]) == 0) {setMotors(-y2, y1); delay(x);}
+  if (strcmp(pattern, rightPatterns[7]) == 0) {setMotors(-y2, y1); delay(x);}
   
 }
 
