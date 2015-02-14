@@ -179,7 +179,21 @@ void setup() {
   Serial.begin(9600);
   // put your setup code here, to run once:
   Serial.println("Fucked");
+  
+  
+  // Added pinModes!!!
+  
+  for (int i = 0; i <8; i++){
+    pinMode(sensor[i], INPUT);
+  }
+  pinMode(extraLeft, INPUT);
+  
+  for (int i = 0; i < 2; i++){
+    pinMode(leftMotor[i], OUTPUT);
+    pinMode(rightMotor[i], OUTPUT);
+  }
  //Serial.println (strcmp(patterns, leftPatterns[0]));
+  
   setMotors(0,0);
   delay(5000);
 }
@@ -190,8 +204,7 @@ void loop() {
   // put your main code here, to run repeatedly:
   // Added U turn guessed time estd: 600ms for StopPattern
   
-  times = 1;
-  while (times > 0){
+  delay(1);
   getPatterns();
   if (strcmp(pattern, requiredPos[0]) == 0 || strcmp(pattern, requiredPos[1]) == 0 || strcmp(pattern, requiredPos[2]) == 0 ||  strcmp(pattern, requiredPos[3]) == 0 ) {setMotors(100, 100); delay(25);}
   else if (strcmp(pattern, pos_11111111) == 0 ) {setMotors(0,0); delay(1000); setMotors(-100, -100); delay(130); setMotors(0,0); delay(1000); setMotors(0, 100); delay(450); setMotors(0,0); delay(2000);}
@@ -199,7 +212,7 @@ void loop() {
   
   
   // Added left turn, for right turn just invert this!
-  else if ((strcmp(pattern, pos_01111000) == 0 && strcmp(leftReading, "1") == 0) ||
+  else if ((strcmp(pattern, pos_11111100) == 0 && strcmp(leftReading, "1") == 0) ||
            (strcmp(pattern, pos_11111000) == 0 && strcmp(leftReading, "1") == 0) ||
            (strcmp(pattern, pos_11110000) == 0 && strcmp(leftReading, "1") == 0) ||
            (strcmp(pattern, pos_11100000) == 0 && strcmp(leftReading, "1") == 0))
@@ -213,12 +226,12 @@ void loop() {
              setMotors(0, 100);
              delay(450);
              setMotors(0,0);
-             delay(100);
+             delay(1000);
              
              
            }
   else  fixit();
-  }
+  
   
 
   
