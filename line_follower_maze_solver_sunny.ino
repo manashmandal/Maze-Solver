@@ -11,6 +11,9 @@ int sensor[] = {62, 61, 60, 59, 58, 57, 56, 55};
 // Added left sensor
 int extraLeft = 63;
 
+char leftReading[] = "0";
+char rightReading[] = "0";
+
 
 
 int extraRight = 64;
@@ -94,6 +97,12 @@ void getPatterns()
       pattern[i] = '1';
     }
   }
+  if (analogRead(extraLeft) < THRESHOLD){
+    leftReading[0] = '0';
+  }  else {
+     leftReading[0] = '1'; 
+ }
+  
   Serial.println(pattern);
 }
 
@@ -132,6 +141,10 @@ const char pos_11111000[] = "11111000"; // More slight leaning right, fix left
 const char pos_11110000[] = "11110000";
 const char pos_11100000[] = "11100000"; // Most leaning right, fix left
 const char pos_00110000[] = "00110000"; // fix right
+
+/// added extra pattern for left
+
+const char pos_11111100[] = "11111100";
 
 // All right patterns in one string
 
@@ -183,7 +196,30 @@ void loop() {
   if (strcmp(pattern, requiredPos[0]) == 0 || strcmp(pattern, requiredPos[1]) == 0 || strcmp(pattern, requiredPos[2]) == 0 ||  strcmp(pattern, requiredPos[3]) == 0 ) {setMotors(100, 100); delay(25);}
   else if (strcmp(pattern, pos_11111111) == 0 ) {setMotors(0,0); delay(1000); setMotors(-100, -100); delay(130); setMotors(0,0); delay(1000); setMotors(0, 100); delay(450); setMotors(0,0); delay(2000);}
   else if (strcmp(pattern, stopPattern) == 0) {setMotors(0,0); delay(500); setMotors(-100, -100); delay(160); setMotors(-100,100);  delay(580); setMotors(0,0); delay(1000);}
+  
+  
+  // Added left turn, for right turn just invert this!
+  else if ((strcmp(pattern, pos_01111000) == 0 && strcmp(leftReading, "1") == 0) ||
+           (strcmp(pattern, pos_11111000) == 0 && strcmp(leftReading, "1") == 0) ||
+           (strcmp(pattern, pos_11110000) == 0 && strcmp(leftReading, "1") == 0) ||
+           (strcmp(pattern, pos_11100000) == 0 && strcmp(leftReading, "1") == 0))
+           {
+             setMotors(0,0);
+             delay(1000);
+             setMotors(-100, -100);
+             delay(130);
+             setMotors(0,0);
+             delay(500);
+             setMotors(0, 100);
+             delay(450);
+             setMotors(0,0);
+             delay(100);
+             
+             
+           }
   else  fixit();
   }
+  
+
   
 }
