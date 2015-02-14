@@ -10,13 +10,18 @@ int sensor[] = {62, 61, 60, 59, 58, 57, 56, 55};
 
 // Added left sensor
 int extraLeft = 63;
+int extraRight = 54;
 
 char leftReading[] = "0";
 char rightReading[] = "0";
 
+// Unusual patterns encountered
+char unusual_11000000[] = "11000000";
+char unusual_00000011[] = "00000011";
 
 
-int extraRight = 64;
+
+
 
 
 int leftMotor[] = {3, 4};
@@ -102,6 +107,13 @@ void getPatterns()
   }  else {
      leftReading[0] = '1'; 
  }
+ 
+ if (analogRead(extraRight) < THRESHOLD){
+   rightReading[0] = '0';
+ } else {
+   rightReading[0] = '1';
+ }
+   
   
   Serial.println(pattern);
 }
@@ -126,12 +138,16 @@ const char pos_00001111[] = "00001111"; // More Leaning left, fix right
 const char pos_00011111[] = "00011111"; // More slight leaning left, fix right
 const char pos_00000111[] = "00000111"; // Most leaning left, fix right
 const char pos_00001100[] = "00001100"; // fix right
+const char pos_00000011[] = "00000011"; // reference from unusual
+
+const char pos_00111111[] = "00111111"; // Added new pattern
+
 
 const char pos_11111111[] = "11111111";
 
 
 // All left Patterns in one string
-const char* leftPatterns[] = {pos_00011110, pos_00001111, pos_00011111, pos_00000111, pos_00001100};
+const char* leftPatterns[] = {pos_00011110, pos_00001111, pos_00011111, pos_00000111, pos_00001100, pos_00000011};
 
 
 ///char pos_01111000[] = "01111000"; // Leaning right, fix left
@@ -142,6 +158,10 @@ const char pos_11110000[] = "11110000";
 const char pos_11100000[] = "11100000"; // Most leaning right, fix left
 const char pos_00110000[] = "00110000"; // fix right
 
+const char pos_11000000[] = "11000000"; // Reference from unusual_11000000
+
+
+
 /// added extra pattern for left
 
 const char pos_11111100[] = "11111100";
@@ -151,7 +171,7 @@ const char pos_11111100[] = "11111100";
 
 
 
-const char* rightPatterns[] = {pos_01111000, pos_11111000, pos_11110000, pos_11100000, pos_00110000};
+const char* rightPatterns[] = {pos_01111000, pos_11111000, pos_11110000, pos_11100000, pos_00110000, pos_11000000};
 //const char* requiredPos[] = {preferredPos_1, preferredPos_2, preferredPos_3, preferredPos_4};
 //const char* leftPatterns[] = {pos_00011110, pos_00001111, pos_00011111, pos_00000111, pos_00001100};
 
@@ -164,11 +184,14 @@ void fixit()
   if (strcmp(pattern, leftPatterns[2]) == 0) {setMotors(y1, -y2); delay(x);}
   if (strcmp(pattern, leftPatterns[3]) == 0) {setMotors(y1, -y2); delay(x);}
   if (strcmp(pattern, leftPatterns[4]) == 0) {setMotors(y1, -y2); delay(x);}
+  if (strcmp(pattern, leftPatterns[5]) == 0) {setMotors(y1, -y2); delay(x);}
+  
   if (strcmp(pattern, rightPatterns[0]) == 0) {setMotors(-y2, y1); delay(x);}
   if (strcmp(pattern, rightPatterns[1]) == 0) {setMotors(-y2, y1); delay(x);}
   if (strcmp(pattern, rightPatterns[2]) == 0) {setMotors(-y2, y1); delay(x);}
   if (strcmp(pattern, rightPatterns[3]) == 0) {setMotors(-y2, y1); delay(x);}
   if (strcmp(pattern, rightPatterns[4]) == 0) {setMotors(-y2, y1); delay(x);}
+  if (strcmp(pattern, rightPatterns[5]) == 0) {setMotors(-y2, y1); delay(x);}
   
 }
 
@@ -187,6 +210,7 @@ void setup() {
     pinMode(sensor[i], INPUT);
   }
   pinMode(extraLeft, INPUT);
+  pinMode(extraRight, INPUT); // Added
   
   for (int i = 0; i < 2; i++){
     pinMode(leftMotor[i], OUTPUT);
@@ -228,8 +252,27 @@ void loop() {
              setMotors(0,0);
              delay(1000);
              
+           }
+
+   // Added right turn
+    else if ((strcmp(pattern, pos_00111111) == 0 && strcmp(rightReading, "1") == 0) ||
+           (strcmp(pattern, pos_00011111) == 0 && strcmp(rightReading, "1") == 0) ||
+           (strcmp(pattern, pos_00001111) == 0 && strcmp(rightReading, "1") == 0) ||
+           (strcmp(pattern, pos_00000111) == 0 && strcmp(rightReading, "1") == 0))
+           {
+             setMotors(0,0);
+             delay(1000);
+             setMotors(-100, -100);
+             delay(130);
+             setMotors(0,0);
+             delay(500);
+             setMotors(100, 0);
+             delay(450);
+             setMotors(0,0);
+             delay(1000);
              
            }
+           
   else  fixit();
   
   
