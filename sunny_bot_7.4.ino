@@ -243,6 +243,24 @@ void fixit()
 }
 
 
+void uTurn()
+{
+  if ((leftReading[0] == '0' && rightReading[0] == '0') && ( pattern[2]=='1' || pattern[3] == '1' || pattern[4] == '1' || pattern[5] == '1' || pattern[6] == '1')){
+     if (strcmp(pattern, requiredPos[0]) == 0 || strcmp(pattern, requiredPos[1]) == 0 || strcmp(pattern, requiredPos[2]) == 0 ||  strcmp(pattern, requiredPos[3]) == 0 ) {setMotors(Speed, Speed); delay(25);}
+     else fixit(); 
+  }
+  
+  else {
+   setMotors(-200, 200);
+   delay(1); 
+  }
+}
+ 
+  
+  
+ 
+
+
 
 void setup() {
   
@@ -278,19 +296,21 @@ void loop() {
   delay(1);
   getPatterns();
   if (strcmp(pattern, requiredPos[0]) == 0 || strcmp(pattern, requiredPos[1]) == 0 || strcmp(pattern, requiredPos[2]) == 0 ||  strcmp(pattern, requiredPos[3]) == 0 ) {setMotors(Speed, Speed); delay(25);}
-  else if (strcmp(pattern, pos_11111111) == 0 ) {setMotors(0,0); delay(1000); setMotors(-Speed, -Speed); delay(130); setMotors(0,0); delay(1000); setMotors(0, Speed); delay(450); setMotors(0,0); delay(2000);}
+  else if (strcmp(pattern, pos_11111111) == 0 ) {setMotors(0,0); delay(1000); /*setMotors(-Speed, -Speed); delay(130);*/ setMotors(0,0); delay(1000); setMotors(0, Speed); delay(530); setMotors(0,0); delay(2000);}
   else if (strcmp(pattern, stopPattern) == 0) 
-      {
-        Serial.println("U Turn detected");
+      { 
+           /* Serial.println("U Turn detected");
             setMotors(0,0); 
             delay(500); 
-            setMotors(-Speed, -Speed);           /* U turn */
+            setMotors(-Speed, -Speed);           // U turn 
             delay(160); 
             setMotors(-Speed, Speed); 
-            delay(580); 
+            delay(530); 
             setMotors(0,0); 
             delay(1000);
+            */
             
+            uTurn();
             
          /*   //getPattern(); /* Debugging here for marginal errors
             //if (strcmp(pattern, stopPattern) == 0 || strcmp(leftReading, "1")
@@ -319,12 +339,12 @@ void loop() {
              Serial.println("Turning left");
              setMotors(0,0);
              delay(1000);
-             setMotors(-Speed, -Speed);
-             delay(130);
+            /* setMotors(-Speed, -Speed);
+             delay(130);*/
              setMotors(0,0);
              delay(500);
              setMotors(0, Speed);
-             delay(450);
+             delay(500);
              setMotors(0,0);
              delay(1000);
              
@@ -339,12 +359,12 @@ void loop() {
              Serial.println("Turning right");
              setMotors(0,0);
              delay(1000);
-             setMotors(-Speed, -Speed);
-             delay(130);
+           /*  setMotors(-Speed, -Speed);
+             delay(130);*/
              setMotors(0,0);
              delay(500);
              setMotors(Speed, 0);
-             delay(450);
+             delay(500);
              setMotors(0,0);
              delay(1000);
              
