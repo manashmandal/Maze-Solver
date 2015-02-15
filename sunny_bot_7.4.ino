@@ -153,6 +153,7 @@ const char pos_00001111[] = "00001111"; // More Leaning left, fix right
 const char pos_00011111[] = "00011111"; // More slight leaning left, fix right
 const char pos_00000111[] = "00000111"; // Most leaning left, fix right
 const char pos_00001100[] = "00001100"; // fix right
+
 const char pos_00000011[] = "00000011"; // reference from unusual
 const char pos_00001110[] = "00001110"; // reference from unusual
 const char pos_00000001[] = "00000001"; // reference from unusual
@@ -171,8 +172,10 @@ const char* leftPatterns[] = {pos_00011110, pos_00001111, pos_00011111, pos_0000
 
 ///char pos_01111000[] = "01111000"; // Leaning right, fix left
 
-const char pos_01111000[] = "11110000"; // More Leaning right, fix left
+const char pos_01111000[] = "01111000"; // More Leaning right, fix left
+
 const char pos_11111000[] = "11111000"; // More slight leaning right, fix left
+//const char pos_01111000[] = "01111000"; // Reference unusual
 const char pos_11110000[] = "11110000";
 const char pos_11100000[] = "11100000"; // Most leaning right, fix left
 const char pos_00110000[] = "00110000"; // fix right
