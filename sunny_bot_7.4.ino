@@ -1,3 +1,11 @@
+/*
+  Author: Manash
+  CFMC = Change for Magician Chassis
+
+
+*/
+
+
 #define THRESHOLD 650
 
 int times;
@@ -131,6 +139,7 @@ void getPatterns()
   Serial.print(pattern);
   Serial.print(rightReading);
   Serial.println();
+  
 }
 
 //
@@ -400,6 +409,17 @@ void loop() {
              delay(500);
              setMotors(0,0);
              delay(10);
+             
+             
+             /* Added more flexibility */
+             getPatterns();
+             if (strcmp(pattern, "00000000") == 0 || strcmp(rightReading, "1") == 0) {
+               
+              
+              setMotors(255, -255);
+             delay(250);                          // CFMC
+             
+             }
              
            }
            
