@@ -2,7 +2,7 @@
 
 int times;
 int x = 10;
-int y1 = 200;
+int y1 = 255;
 int y2 = 0;
 int Speed = 255;
 // Init all bot components
