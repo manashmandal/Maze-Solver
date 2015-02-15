@@ -1,4 +1,4 @@
-#define THRESHOLD 700
+#define THRESHOLD 650
 
 int times;
 int x = 10;
@@ -154,6 +154,9 @@ const char pos_00011111[] = "00011111"; // More slight leaning left, fix right
 const char pos_00000111[] = "00000111"; // Most leaning left, fix right
 const char pos_00001100[] = "00001100"; // fix right
 
+const char pos_01111111[] = "01111111";
+
+
 const char pos_00000011[] = "00000011"; // reference from unusual
 const char pos_00001110[] = "00001110"; // reference from unusual
 const char pos_00000001[] = "00000001"; // reference from unusual
@@ -296,7 +299,25 @@ void loop() {
   delay(1);
   getPatterns();
   if (strcmp(pattern, requiredPos[0]) == 0 || strcmp(pattern, requiredPos[1]) == 0 || strcmp(pattern, requiredPos[2]) == 0 ||  strcmp(pattern, requiredPos[3]) == 0 ) {setMotors(Speed, Speed); delay(25);}
-  else if (strcmp(pattern, pos_11111111) == 0 ) {setMotors(0,0); delay(1000); /*setMotors(-Speed, -Speed); delay(130);*/ setMotors(0,0); delay(1000); setMotors(0, Speed); delay(530); setMotors(0,0); delay(2000);}
+  
+  // Cross-section
+  else if (
+            (strcmp(pattern, pos_11111111) == 0  && leftReading[0] == '1') || 
+            (strcmp(pattern, pos_11111111) == 0  && rightReading[0] == '1') || 
+            (strcmp(pattern, pos_11111111) == 0  && leftReading[0] == '1') || 
+            (strcmp(pattern, pos_11111111) == 0)  /*|| 
+            (strcmp(pattern, "00011110") && rightReading[0] == '1')*/
+            //|| 
+            //(strcmp(pattern, pos_11111110) && leftReading[0] == '1') || 
+            //(strcmp(pattern, pos_01111111) && rightReading[0] == '1')
+         )
+         
+         
+  {
+ // getPatterns();
+  setMotors(0,0); delay(50); setMotors(-Speed, -Speed); delay(120); setMotors(0,0); delay(10); setMotors(0, Speed); delay(530); setMotors(0,0); delay(10);}
+  
+  
   else if (strcmp(pattern, stopPattern) == 0) 
       { 
            /* Serial.println("U Turn detected");
@@ -329,16 +350,23 @@ void loop() {
   
   
   // Added left turn, for right turn just invert this!
-  else if ((strcmp(pattern, pos_11111100) == 0 && strcmp(leftReading, "1") == 0) ||
-           (strcmp(pattern, pos_11111000) == 0 && strcmp(leftReading, "1") == 0) ||
-           (strcmp(pattern, pos_11110000) == 0 && strcmp(leftReading, "1") == 0) ||
-           (strcmp(pattern, pos_11100000) == 0 && strcmp(leftReading, "1") == 0) ||
-           (strcmp(pattern, pos_11111111) == 0 && strcmp(leftReading, "1") == 0) ||
-           (strcmp(pattern, pos_11111110) == 0 && strcmp(leftReading, "1") == 0))
+  else if (
+               (strcmp(pattern, pos_11111100) == 0 && strcmp(leftReading, "1") == 0) ||
+               (strcmp(pattern, pos_11111000) == 0 && strcmp(leftReading, "1") == 0) ||
+               (strcmp(pattern, pos_11110000) == 0 && strcmp(leftReading, "1") == 0) ||
+               (strcmp(pattern, pos_11100000) == 0 && strcmp(leftReading, "1") == 0) //||
+               
+              // (strcmp(pattern, pos_11000000) == 0 && strcmp(leftReading, "1") == 0) //||
+               //(strcmp(pattern, 
+               //|| 
+              /* (strcmp(pattern, pos_11111111) == 0 && strcmp(leftReading, "1") == 0) ||
+               (strcmp(pattern, pos_11111110) == 0 && strcmp(leftReading, "1") == 0)   */    
+          )
+          
            {
              Serial.println("Turning left");
              setMotors(0,0);
-             delay(1000);
+             delay(10);
             /* setMotors(-Speed, -Speed);
              delay(130);*/
              setMotors(0,0);
@@ -346,19 +374,24 @@ void loop() {
              setMotors(0, Speed);
              delay(500);
              setMotors(0,0);
-             delay(1000);
+             delay(10);
              
            }
 
    // Added right turn
-    else if ((strcmp(pattern, pos_00111111) == 0 && strcmp(rightReading, "1") == 0) ||
-           (strcmp(pattern, pos_00011111) == 0 && strcmp(rightReading, "1") == 0) ||
-           (strcmp(pattern, pos_00001111) == 0 && strcmp(rightReading, "1") == 0) ||
-           (strcmp(pattern, pos_00000111) == 0 && strcmp(rightReading, "1") == 0))
+    else if (
+               (strcmp(pattern, pos_00111111) == 0 && strcmp(rightReading, "1") == 0) ||
+               (strcmp(pattern, pos_00011111) == 0 && strcmp(rightReading, "1") == 0) ||
+               (strcmp(pattern, pos_00001111) == 0 && strcmp(rightReading, "1") == 0) ||
+               (strcmp(pattern, pos_00000111) == 0 && strcmp(rightReading, "1") == 0) //||
+              // (strcmp(pattern, pos_00000011) == 0 && strcmp(rightReading, "1") == 0) 
+               
+           
+           )
            {
              Serial.println("Turning right");
              setMotors(0,0);
-             delay(1000);
+             delay(10);
            /*  setMotors(-Speed, -Speed);
              delay(130);*/
              setMotors(0,0);
@@ -366,7 +399,7 @@ void loop() {
              setMotors(Speed, 0);
              delay(500);
              setMotors(0,0);
-             delay(1000);
+             delay(10);
              
            }
            
