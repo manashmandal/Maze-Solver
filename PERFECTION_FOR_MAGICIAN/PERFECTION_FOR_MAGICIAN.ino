@@ -260,43 +260,53 @@ bool fixit()
 {
   ///getPatterns();
   bool fixed = false;
-  if (strcmp(pattern, leftPatterns[0]) == 0) {setMotors(y1, -y2); delay(x); fixed = true;}
-  if (strcmp(pattern, leftPatterns[1]) == 0) {setMotors(y1, -y2); delay(x); fixed = true;}
-  if (strcmp(pattern, leftPatterns[2]) == 0) {setMotors(y1, -y2); delay(x); fixed = true;}
-  if (strcmp(pattern, leftPatterns[3]) == 0) {setMotors(y1, -y2); delay(x); fixed = true;}
-  if (strcmp(pattern, leftPatterns[4]) == 0) {setMotors(y1, -y2); delay(x); fixed = true;}
-  if (strcmp(pattern, leftPatterns[5]) == 0) {setMotors(y1, -y2); delay(x); fixed = true;}
-  if (strcmp(pattern, leftPatterns[6]) == 0) {setMotors(y1, -y2); delay(x); fixed = true;}
-  if (strcmp(pattern, leftPatterns[7]) == 0) {setMotors(y1, -y2); delay(x); fixed = true;}
   
-  if (strcmp(pattern, rightPatterns[0]) == 0) {setMotors(-y2, y1); delay(x); fixed = true;}
-  if (strcmp(pattern, rightPatterns[1]) == 0) {setMotors(-y2, y1); delay(x); fixed = true;}
-  if (strcmp(pattern, rightPatterns[2]) == 0) {setMotors(-y2, y1); delay(x); fixed = true;}
-  if (strcmp(pattern, rightPatterns[3]) == 0) {setMotors(-y2, y1); delay(x); fixed = true;}
-  if (strcmp(pattern, rightPatterns[4]) == 0) {setMotors(-y2, y1); delay(x); fixed = true;}
-  if (strcmp(pattern, rightPatterns[5]) == 0) {setMotors(-y2, y1); delay(x); fixed = true;}
-  if (strcmp(pattern, rightPatterns[6]) == 0) {setMotors(-y2, y1); delay(x); fixed = true;}
-  if (strcmp(pattern, rightPatterns[7]) == 0) {setMotors(-y2, y1); delay(x); fixed = true;}
+  
+
+  
+  
+  if (strcmp(pattern, leftPatterns[0]) == 0) {setMotors(y1 - 10, 0); delay(x); fixed = true;}
+  if (strcmp(pattern, leftPatterns[1]) == 0) {setMotors(y1 - 8, 0); delay(x); fixed = true;}
+  if (strcmp(pattern, leftPatterns[2]) == 0) {setMotors(y1 - 8, 0); delay(x); fixed = true;}
+  if (strcmp(pattern, leftPatterns[3]) == 0) {setMotors(y1 - 5, 0); delay(x); fixed = true;}
+  if (strcmp(pattern, leftPatterns[4]) == 0) {setMotors(y1 - 5, 0); delay(x); fixed = true;}
+  if (strcmp(pattern, leftPatterns[5]) == 0) {setMotors(y1, 0); delay(x); fixed = true;}
+  if (strcmp(pattern, leftPatterns[6]) == 0) {setMotors(y1 - 5, 0); delay(x); fixed = true;}
+  if (strcmp(pattern, leftPatterns[7]) == 0) {setMotors(y1, 0); delay(x); fixed = true;}
+  
+ 
+
+  
+  if (strcmp(pattern, rightPatterns[0]) == 0) {setMotors(0, y1 - 10); delay(x); fixed = true;}
+  if (strcmp(pattern, rightPatterns[1]) == 0) {setMotors(0, y1 - 8); delay(x); fixed = true;}
+  if (strcmp(pattern, rightPatterns[2]) == 0) {setMotors(0, y1 - 5); delay(x); fixed = true;}
+  if (strcmp(pattern, rightPatterns[3]) == 0) {setMotors(0, y1 - 5); delay(x); fixed = true;}
+  if (strcmp(pattern, rightPatterns[4]) == 0) {setMotors(0, y1); delay(x); fixed = true;}
+  if (strcmp(pattern, rightPatterns[5]) == 0) {setMotors(0, y1 - 5); delay(x); fixed = true;}
+  if (strcmp(pattern, rightPatterns[6]) == 0) {setMotors(0, y1); delay(x); fixed = true;}
+  if (strcmp(pattern, rightPatterns[7]) == 0) {setMotors(0, y1); delay(x); fixed = true;}
   
   if(strcmp(leftReading, "1") == 0 && strcmp(pattern, stopPattern) == 0){
           setMotors(0, Speed);
-          delay(50);
+          delay(30);
           setMotors(0,0); 
-          delay(2);
+          delay(1);
           fixed = true;
         }
         
    if(strcmp(rightReading, "1") == 0 && strcmp(pattern, stopPattern) == 0){
      
      setMotors(Speed, 0);
-          delay(50);
+          delay(30);
           setMotors(0,0); 
-          delay(2);
+          delay(1);
           fixed = true;
      
    }
         
   return fixed;
+  
+  
   
 }
 
@@ -306,14 +316,15 @@ bool fixit()
 
 void uTurn()
 {
-  if ((leftReading[0] == '0' && rightReading[0] == '0') && ( pattern[2]=='1' || pattern[3] == '1' || pattern[4] == '1' || pattern[5] == '1' || pattern[6] == '1')){
+  if ((leftReading[0] == '0' && rightReading[0] == '0') && ( pattern[2]=='1' || pattern[3] == '1' || pattern[4] == '1' || pattern[5] == '1' || pattern[6] == '1'))
+  {
      if (strcmp(pattern, requiredPos[0]) == 0 || strcmp(pattern, requiredPos[1]) == 0 || strcmp(pattern, requiredPos[2]) == 0 ||  strcmp(pattern, requiredPos[3]) == 0 ) {setMotors(Speed, Speed); delay(25);}
      else fixit(); 
   }
   
   else {
    setMotors(-100, 100);
-   delay(1); 
+   delay(50); 
   }
 }
  
@@ -377,7 +388,7 @@ void loop() {
   
    
     if (!fixit()){
-        setMotors(0,0); delay(300); /* setMotors(Speed, Speed); delay(80); */ setMotors(0,0); delay(10); setMotors(0, Speed); delay(450); setMotors(0,0); delay(10);
+        setMotors(0,0); delay(300); /* setMotors(Speed, Speed); delay(80); */ setMotors(0,0); delay(1); setMotors(0, Speed); delay(350); setMotors(0,0); delay(10);
     }
     
     else {
@@ -393,7 +404,7 @@ void loop() {
              
              delay(500);
              setMotors(0, Speed);
-             delay(350);                 // CMFC
+             delay(325);                 // CMFC
              setMotors(0,0);
              delay(10);
       
@@ -458,9 +469,9 @@ void loop() {
              setMotors(0,0);
              delay(500);
              setMotors(0, Speed);
-             delay(500);
+             delay(350);
              setMotors(0,0);
-             delay(10);
+             delay(1);
              
            }
 
@@ -483,9 +494,9 @@ void loop() {
              setMotors(0,0);
              delay(500);
              setMotors(Speed, 0);
-             delay(500);
+             delay(350);
              setMotors(0,0);
-             delay(10);
+             delay(1);
              
              
              /* Added more flexibility */
@@ -493,7 +504,7 @@ void loop() {
              if (strcmp(pattern, "00000000") == 0 || strcmp(rightReading, "1") == 0) {
                
               
-              setMotors(200, -200);
+              setMotors(150, -150);
              delay(100);                          // CFMC
              
              }
