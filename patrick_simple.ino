@@ -171,7 +171,12 @@ void leftHandWall()
 		return;
 	}
 	
+	// Add the paths after patrick-line- 161
 	
+	
+		
+		straight();
+	}
 	readSensors();
 	
 	if (leftFar < threshold && leftCenter < threshold && rightCenter < threshold && leftNear < threshold && rightNear < threshold && rightFar < threshold)
@@ -187,17 +192,6 @@ void leftHandWall()
 void done()
 {
 	setMotor(0,0);
-	
-	
-	while(analogRead(leftFarSensor) > threshold)
-	{
-		digitalWrite(led, LOW);
-		delay(150);
-		digitalWrite(led, HIGH);
-		delay(150);
-	}
-	delay(500);
-	
 }
 
 
@@ -219,7 +213,6 @@ void turnLeft()
 		setMotor(0,0);
 		delay(1);
 	}
-	
 	
 	
 }
@@ -253,7 +246,6 @@ void turnRight()
 	}
 	
 	
-		
 }
 	
 	
@@ -283,7 +275,7 @@ void straight()
 		delay(4);
 		setMotor(0,0);
 		delay(1);
-	}
+}
 
 	
 // ----------- Turn Around ------
@@ -300,12 +292,126 @@ void straight()
 			delay(1);
 		}
 		
+		
 	
 	}
 
 
 // -------------------------------------------------
 
+
+void shortPath(){
+ int shortDone=0;
+  if(path[pathLength-3]=='L' && path[pathLength-1]=='R'){
+    pathLength-=3;
+    path[pathLength]='B';
+    //Serial.println("test1");
+    shortDone=1;
+  }
+   
+  if(path[pathLength-3]=='L' && path[pathLength-1]=='S' && shortDone==0){
+    pathLength-=3;
+    path[pathLength]='R';
+    //Serial.println("test2");
+    shortDone=1;
+  }
+   
+  if(path[pathLength-3]=='R' && path[pathLength-1]=='L' && shortDone==0){
+    pathLength-=3;
+    path[pathLength]='B';
+    //Serial.println("test3");
+    shortDone=1;
+  }
+  
+   
+  if(path[pathLength-3]=='S' && path[pathLength-1]=='L' && shortDone==0){
+    pathLength-=3;
+    path[pathLength]='R';
+    //Serial.println("test4");
+    shortDone=1;
+  }
+     
+  if(path[pathLength-3]=='S' && path[pathLength-1]=='S' && shortDone==0){
+    pathLength-=3;
+    path[pathLength]='B';
+    //Serial.println("test5");
+    shortDone=1;
+  }
+    if(path[pathLength-3]=='L' && path[pathLength-1]=='L' && shortDone==0){
+    pathLength-=3;
+    path[pathLength]='S';
+    //Serial.println("test6");
+    shortDone=1;
+  }
+  
+  path[pathLength+1]='D';
+  path[pathLength+2]='D';
+  pathLength++;
+  //Serial.print("Path length: ");
+  //Serial.println(pathLength);
+  //printPath();
+}
+
+
+
+
+void printPath(){
+  Serial.println("+++++++++++++++++");
+  int x;
+  while(x<=pathLength){
+  Serial.println(path[x]);
+  x++;
+  }
+  Serial.println("+++++++++++++++++");
+}
+
+
+void replay(){
+   readSensors();
+  if(leftFar<threshold && rightFar< threshold){
+    straight();
+  }
+  else{
+    if(path[readLength]=='D'){
+		setMotor(speed, speed);
+		delay(delayVar3);
+		setMotor(0,0);
+      endMotion();
+    }
+    if(path[readLength]=='L'){
+		setMotor(speed, speed);
+		delay(leaptime);
+      turnLeft();
+    }
+    if(path[readLength]=='R'){
+		setMotor(speed, speed);
+    delay(leaptime);
+    turnRight();
+    }
+    if(path[readLength]=='S'){
+		setMotor(speed, speed);
+		delay(leaptime);
+		straight();
+    }
+    
+    readLength++;
+  }
+    
+  replay();
+  
+}
+
+void endMotion(){
+    digitalWrite(led, LOW);
+    delay(500);
+    digitalWrite(led, HIGH);
+    delay(200);
+    digitalWrite(led, LOW);
+    delay(200);
+    digitalWrite(led, HIGH);
+    delay(500);
+    endMotion();
+}	
 
 
 
